@@ -106,5 +106,5 @@
 
 ## Hỗ trợ
 
-Email: [nguyenvinh19525@gmail.com](mailto:nguyenvinh19525@gmail.com)
-GitHub: [https://github.com/phuc-vinh-vynxii/SoundConverterOfficial](https://github.com/phuc-vinh-vynxii/SoundConverterOfficial)
+Email: [truongtrivn123@gmail.com](mailto:truongtrivn123@gmail.com)
+GitHub: [https://github.com/TCTri205/SoundConverterOfficial](https://github.com/TCTri205/SoundConverterOfficial)

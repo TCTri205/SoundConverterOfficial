@@ -2,11 +2,6 @@
 
 Sound Converter là ứng dụng JavaFX dùng để quản lý, phân tích và trộn file âm thanh với AI Whisper CPP & FFmpeg.
 
----
-
-## Ạnh màn hình
-
-![Giao diện Sound Converter](docs/screenshot.png)
 
 ---
 
@@ -45,9 +40,9 @@ src/main/resources/config.properties
 3. Thêm nội dung:
 
 ```properties
-db.url=jdbc:mysql://localhost:3306/soundconverter?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8
+db.url=jdbc:mysql://localhost:3308/soundconverter?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8
 db.user=root
-db.password=your_password
+db.password=your_mysql_password
 ```
 
 > Ứng dụng sẽ tự động tạo database + bảng khi chạy lần đầu.
@@ -70,7 +65,7 @@ mvn -version
 ## 4. Biên dựng project
 
 ```bash
-git clone https://github.com/phuc-vinh-vynxii/SoundConverterOfficial.git
+git clone https://github.com/TCTri205/SoundConverterOfficial
 cd SoundConverterOfficial
 mvn clean package
 ```
@@ -119,7 +114,7 @@ ALTER TABLE audio_segments CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unic
 Và update JDBC:
 
 ```properties
-db.url=jdbc:mysql://localhost:3306/soundconverter?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8
+db.url=jdbc:mysql://localhost:3308/soundconverter?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8
 ```
 
 ### ❌ **Lỗi "invalid model" khi Whisper chạy**:
@@ -159,6 +154,3 @@ pause
 * [FFmpeg](https://ffmpeg.org/download.html)
 * [MySQL JDBC Driver](https://dev.mysql.com/downloads/connector/j/)
 
----
-
-© 2025 Sound Converter Project. Maintained by \[PHÚc VĨnh]
