@@ -1,0 +1,110 @@
+# SOUND CONVERTER - HƯỚNG DẪN Sử DỤNG
+
+## Khởi động ứng dụng
+
+1. Từ thư mục gốc của dự án, chạy lệnh:
+
+   ```bash
+   java -jar target/SoundConverterOfficial-1.0-SNAPSHOT.jar
+   ```
+
+2. Hoặc tạo file batch để chạy dễ dàng hơn (run.bat):
+
+   ```batch
+   @echo off
+   java -jar target/SoundConverterOfficial-1.0-SNAPSHOT.jar
+   pause
+   ```
+
+3. Đảm bảo cấu trúc thư mục như sau trước khi chạy:
+
+   ```
+   SoundConverterOfficial/
+   ├── models/
+   │   ├─ ggml-base-q8_0.bin    # Model đa ngôn ngữ
+   │   └─ ggml-tiny.en.bin      # Model tiếng Anh
+   ├─ lib/
+   │   ├─ whisper-cli.exe
+   │   ├─ ggml.dll
+   │   ├─ whisper.dll
+   │   └─ [Các DLL khác]
+   └─ target/
+       └─ SoundConverterOfficial-1.0-SNAPSHOT.jar
+   ```
+
+## Hướng dẫn sử dụng chi tiết
+
+### 1. Nhập file âm thanh
+
+* Nhấn "Import" hoặc Ctrl+I
+* Hỗ trợ: MP3, WAV, OGG, AAC
+* File âm thanh sẽ hiện trong danh sách bên trái
+
+### 2. Phân tích AI
+
+* Chọn file, chọn ngôn ngữ, điền thời lượng segment (0 = tự động)
+* Nhấn "Analyze" hoặc Ctrl+A
+* Kết quả phân đoạn sẽ hiện trong bảng
+
+### 3. Chỉnh sửa
+
+* Nhấn đúc chuột hoặc Ctrl+E vào cột "Text"
+* Sửa nội dung và Enter để lưu
+
+### 4. Tạo file mới
+
+* Chọn nhiều đoạn -> "Add to Merge"
+* Nhấn Preview (Ctrl+P) để nghe thử
+* Nhấn Merge (Ctrl+M) để trộn
+* Nhập tên file và chọn vị trí lưu
+
+### 5. Lưu và tải cấu hình trộn
+
+* Ctrl+S để lưu cấu hình
+* Ctrl+L để tải lại
+
+### 6. Đổi model AI
+
+* Tải model từ GitHub Whisper CPP và copy vào `models/`
+* Vào `WhisperService.java`, chỉnh path model
+
+## Phím tắt
+
+* **Ctrl+I**: Nhập file
+* **Ctrl+A**: Phân tích AI
+* **Ctrl+E**: Sửa text
+* **Ctrl+M**: Trộn file
+* **Ctrl+S**: Lưu cấu hình
+* **Ctrl+L**: Tải cấu hình
+* **Ctrl+P**: Nghe thử
+
+## Lỗi và cách khắc phục
+
+### Whisper CLI lỗi
+
+* Kiểm tra DLL đúng phiên bản (64-bit)
+* JVM có trùng với DLL?
+* Tải model khác nếu cái cũ lỗi
+
+### Trộn file bị lỗi
+
+* Kiểm tra ffmpeg.exe đã có
+* File trống, bị hỏng hoặc không đủ quyền ghi
+
+### Lỗi DB
+
+* MySQL chơi có chạy?
+* config.properties có đúng?
+* Bảng "audio\_segments" đã đúng charset UTF8MB4?
+
+> **Gợi ý**:
+> Dùng lệnh SQL sau nếu gặp lỗi lưu chuỗi:
+>
+> ```sql
+> ALTER TABLE audio_segments MODIFY text TEXT CHARACTER SET utf8mb4;
+> ```
+
+## Hỗ trợ
+
+Email: [nguyenvinh19525@gmail.com](mailto:nguyenvinh19525@gmail.com)
+GitHub: [https://github.com/phuc-vinh-vynxii/SoundConverterOfficial](https://github.com/phuc-vinh-vynxii/SoundConverterOfficial)

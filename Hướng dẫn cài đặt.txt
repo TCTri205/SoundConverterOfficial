@@ -1,0 +1,164 @@
+# SOUND CONVERTER - HƯỜNG DẪN CÀI ĐẶT
+
+Sound Converter là ứng dụng JavaFX dùng để quản lý, phân tích và trộn file âm thanh với AI Whisper CPP & FFmpeg.
+
+---
+
+## Ạnh màn hình
+
+![Giao diện Sound Converter](docs/screenshot.png)
+
+---
+
+## Yêu cầu hệ thống
+
+* Java Development Kit (JDK) 17 trở lên
+* MySQL 8.0+ (hoặc MariaDB)
+* Apache Maven
+* FFmpeg (tích hợp trong project)
+* Whisper CLI (dạng .exe hoặc build từ source)
+* Ít nhất 4GB RAM (khuyên nghiệ 8GB)
+
+---
+
+## 1. Cài đặt Java
+
+1. Tải [JDK 17+](https://www.oracle.com/java/technologies/downloads/) hoặc [Adoptium](https://adoptium.net/)
+2. Thiết lập `JAVA_HOME` và thêm vào `PATH`
+3. Kiểm tra:
+
+```bash
+java -version
+```
+
+---
+
+## 2. Cài đặt MySQL
+
+1. Tải từ [https://dev.mysql.com/downloads/mysql/](https://dev.mysql.com/downloads/mysql/)
+2. Tạo file:
+
+```ini
+src/main/resources/config.properties
+```
+
+3. Thêm nội dung:
+
+```properties
+db.url=jdbc:mysql://localhost:3306/soundconverter?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8
+db.user=root
+db.password=your_password
+```
+
+> Ứng dụng sẽ tự động tạo database + bảng khi chạy lần đầu.
+
+---
+
+## 3. Cài đặt Maven
+
+1. Tải từ [https://maven.apache.org/download.cgi](https://maven.apache.org/download.cgi)
+2. Thiết lập biến môi trường `MAVEN_HOME`
+3. Thêm `%MAVEN_HOME%\bin` vào `PATH`
+4. Kiểm tra:
+
+```bash
+mvn -version
+```
+
+---
+
+## 4. Biên dựng project
+
+```bash
+git clone https://github.com/phuc-vinh-vynxii/SoundConverterOfficial.git
+cd SoundConverterOfficial
+mvn clean package
+```
+
+Sau khi xong, file JAR sẽ nằm trong `target/SoundConverterOfficial-1.0-SNAPSHOT.jar`
+
+---
+
+## 5. Chuẩn bị thư viện Whisper & FFmpeg
+
+1. Tạo các thư mục:
+
+```bash
+mkdir models lib output
+```
+
+2. Copy file:
+
+```bash
+cp src/main/resources/whisper/models/ggml-base-q8_0.bin models/
+cp src/main/resources/whisper/whisper-cli.exe lib/
+cp src/main/resources/whisper/*.dll lib/
+```
+
+3. (Nếu cài đặt bằng JAR):
+
+```bash
+java -jar target/SoundConverterOfficial-1.0-SNAPSHOT.jar
+```
+
+---
+
+## 6. Các lỗi thường gặp & khắc phục
+
+### ❌ **Lỗi font khi lưu phiên âm**:
+
+> `Incorrect string value: '\xEF\xBF\xBD...'`
+
+Cách sửa:
+
+```sql
+USE soundconverter;
+ALTER TABLE audio_segments CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+Và update JDBC:
+
+```properties
+db.url=jdbc:mysql://localhost:3306/soundconverter?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8
+```
+
+### ❌ **Lỗi "invalid model" khi Whisper chạy**:
+
+> Do model `.bin` bị hỏng hoặc sai format
+
+🔗 Tải lại từ: [https://huggingface.co/ggerganov/whisper.cpp](https://huggingface.co/ggerganov/whisper.cpp)
+
+### ❌ **Lỗi khi edit phân đoạn**
+
+> Do character encoding, hoặc do trình bảng chưa sinh ra
+
+Kiểm tra:
+
+```sql
+SHOW TABLES;
+DESCRIBE audio_segments;
+```
+
+---
+
+## 7. Gợi ý chạy nhanh project (Windows)
+
+Tạo file `run.bat`:
+
+```bat
+@echo off
+java -jar target/SoundConverterOfficial-1.0-SNAPSHOT.jar
+pause
+```
+
+---
+
+## 8. Tham khảo
+
+* [Whisper CPP](https://github.com/ggerganov/whisper.cpp)
+* [FFmpeg](https://ffmpeg.org/download.html)
+* [MySQL JDBC Driver](https://dev.mysql.com/downloads/connector/j/)
+
+---
+
+© 2025 Sound Converter Project. Maintained by \[PHÚc VĨnh]
